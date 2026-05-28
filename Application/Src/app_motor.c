@@ -11,9 +11,6 @@ void Motor_PID_Init(void)
     Motor_Init(&hmotorA);
     Encoder_Init(&hencoderA);
 
-    
-
-
 }
 
 

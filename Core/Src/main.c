@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "dma.h"
 #include "tim.h"
 #include "usart.h"
@@ -30,6 +31,7 @@
 #include "bsp_encoder.h"
 #include "bsp_motor.h"
 #include "bsp_user_key.h"
+#include "bsp_adc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +58,7 @@ uint8_t pid_control_flag = 0;
 uint64_t global_count_tim = 0;
 int16_t encoder_speed  = 0;
 
-float Target = 10, Actual, Out;
+float Target = 0, Actual, Out;
 float Kp = 0.5f, Ki= 0.2f, Kd = 0;
 float Error0, Error1, Error2;
 
@@ -109,6 +111,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_UART5_Init();
   MX_TIM12_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim12);
   Motor_Init(&hmotorA);
@@ -121,7 +124,7 @@ int main(void)
   while (1)
   {
     Key_Process();
-
+    Target = AD_GetValue();
     if (pid_control_flag == 1)
     {
       pid_control_flag  = 0;

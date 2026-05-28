@@ -56,6 +56,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     BSP/Src/bsp_user_key.c
     BSP/Src/bsp_uart.c
     BSP/Src/bsp_timer.c
+    BSP/Src/bsp_adc.c
     Application/Src/app_motor.c
 )
 
